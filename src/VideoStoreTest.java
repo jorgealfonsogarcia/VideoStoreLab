@@ -1,48 +1,53 @@
-import junit.framework.*;
+import org.junit.Before;
+import org.junit.Test;
 
-public class VideoStoreTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+
+public class VideoStoreTest {
 
     private Statement statement;
 
-    public VideoStoreTest(String name) {
-        super(name);
-    }
-
-    protected void setUp() {
+    @Before
+    public void setUp() {
         statement = new Statement("Customer");
     }
 
+    @Test
     public void testSingleNewReleaseStatementTotals() {
         statement.addRental(new Rental(new Movie("The Cell", Movie.NEW_RELEASE), 3));
         statement.generate();
-        assertEquals(9.0, statement.getTotal());
+        assertEquals(9.0, statement.getTotal(), .001);
         assertEquals(2, statement.getFrequentRenterPoints());
     }
 
+    @Test
     public void testDualNewReleaseStatementTotals() {
         statement.addRental(new Rental(new Movie("The Cell", Movie.NEW_RELEASE), 3));
         statement.addRental(new Rental(new Movie("The Tigger Movie", Movie.NEW_RELEASE), 3));
         statement.generate();
-        assertEquals(18.0, statement.getTotal());
+        assertEquals(18.0, statement.getTotal(), .001);
         assertEquals(4, statement.getFrequentRenterPoints());
     }
 
+    @Test
     public void testSingleChildrensStatementTotals() {
         statement.addRental(new Rental(new Movie("The Tigger Movie", Movie.CHILDRENS), 3));
         statement.generate();
-        assertEquals(1.5, statement.getTotal());
+        assertEquals(1.5, statement.getTotal(), .001);
         assertEquals(1, statement.getFrequentRenterPoints());
     }
 
+    @Test
     public void testMultipleRegularStatementTotals() {
         statement.addRental(new Rental(new Movie("Plan 9 from Outer Space", Movie.REGULAR), 1));
         statement.addRental(new Rental(new Movie("8 1/2", Movie.REGULAR), 2));
         statement.addRental(new Rental(new Movie("Eraserhead", Movie.REGULAR), 3));
         statement.generate();
-        assertEquals(7.5, statement.getTotal());
+        assertEquals(7.5, statement.getTotal(), .001);
         assertEquals(3, statement.getFrequentRenterPoints());
     }
 
+    @Test
     public void testMultipleRegularStatementFormat() {
         statement.addRental(new Rental(new Movie("Plan 9 from Outer Space", Movie.REGULAR), 1));
         statement.addRental(new Rental(new Movie("8 1/2", Movie.REGULAR), 2));
