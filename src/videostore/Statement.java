@@ -1,3 +1,5 @@
+package videostore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class Statement {
     }
 
     private String header() {
-        return String.format("Rental Record for %s\n", customerName);
+        return String.format("videostore.Rental Record for %s\n", customerName);
     }
 
     private String rentalLines() {
