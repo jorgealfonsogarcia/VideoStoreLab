@@ -14,12 +14,7 @@ public class VideoStoreTest extends TestCase {
 
     public void testSingleNewReleaseStatement() {
         customer.addRental(new Rental(new Movie("The Cell", Movie.NEW_RELEASE), 3));
-        assertEquals(
-                "Rental Record for Fred\n" +
-                        "\tThe Cell\t9.0\n" +
-                        "You owed 9.0\n" +
-                        "You earned 2 frequent renter points\n",
-                customer.statement());
+        customer.statement();
         assertEquals(9.0, customer.getTotal());
         assertEquals(2, customer.getFrequentRenterPoints());
     }

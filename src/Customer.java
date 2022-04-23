@@ -2,17 +2,19 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 public class Customer {
-    private String _name;
-    private Vector _rentals = new Vector();
+    private String name;
+    private Vector rentals = new Vector();
+    private double totalAmount;
+    private int frequentRenterPoints;
 
     public Customer(String name) {
-        _name = name;
+        this.name = name;
     }
 
     public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        Enumeration rentals = _rentals.elements();
+        totalAmount = 0;
+        frequentRenterPoints = 0;
+        Enumeration rentals = this.rentals.elements();
         String result = "Rental Record for " + getName() + "\n";
         while (rentals.hasMoreElements()) {
             double thisAmount = 0;
@@ -36,13 +38,13 @@ public class Customer {
             }
 
             // add frequent renter points
-            frequentRenterPoints ++;
+            frequentRenterPoints++;
             // add bonus for a two day new release rental
             if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
-                    each.getDaysRented() > 1) frequentRenterPoints ++;
+                    each.getDaysRented() > 1) frequentRenterPoints++;
 
             //show figures for this rental
-            result += "\t" + each.getMovie().getTitle()+ "\t" +
+            result += "\t" + each.getMovie().getTitle() + "\t" +
                     String.valueOf(thisAmount) + "\n";
             totalAmount += thisAmount;
         }
@@ -54,10 +56,18 @@ public class Customer {
     }
 
     public void addRental(Rental arg) {
-        _rentals.addElement(arg);
+        rentals.addElement(arg);
     }
 
     public String getName() {
-        return _name;
+        return name;
+    }
+
+    public double getTotal() {
+        return totalAmount;
+    }
+
+    public int getFrequentRenterPoints() {
+        return frequentRenterPoints;
     }
 }
