@@ -1,21 +1,21 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class Customer {
-    private String name;
+public class Statement {
+    private String customerName;
     private Vector rentals = new Vector();
     private double totalAmount;
     private int frequentRenterPoints;
 
-    public Customer(String name) {
-        this.name = name;
+    public Statement(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String statement() {
+    public String generate() {
         totalAmount = 0;
         frequentRenterPoints = 0;
         Enumeration rentals = this.rentals.elements();
-        String result = "Rental Record for " + getName() + "\n";
+        String result = "Rental Record for " + getCustomerName() + "\n";
         while (rentals.hasMoreElements()) {
             double thisAmount = 0;
             Rental each = (Rental) rentals.nextElement();
@@ -59,8 +59,8 @@ public class Customer {
         rentals.addElement(arg);
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
     public double getTotal() {
