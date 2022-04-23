@@ -20,6 +20,8 @@ public class VideoStoreTest extends TestCase {
                         "You owed 9.0\n" +
                         "You earned 2 frequent renter points\n",
                 customer.statement());
+        assertEquals(9.0, customer.getTotal());
+        assertEquals(2, customer.getFrequentRenterPoints());
     }
 
     public void testDualNewReleaseStatement() {
