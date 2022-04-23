@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 public class VideoStoreTest {
 
+    private static final double DELTA = .001;
     private Statement statement;
 
     @Before
@@ -16,7 +17,7 @@ public class VideoStoreTest {
     public void testSingleNewReleaseStatementTotals() {
         statement.addRental(new Rental(new Movie("The Cell", Movie.NEW_RELEASE), 3));
         statement.generate();
-        assertEquals(9.0, statement.getTotal(), .001);
+        assertEquals(9.0, statement.getTotal(), DELTA);
         assertEquals(2, statement.getFrequentRenterPoints());
     }
 
@@ -25,7 +26,7 @@ public class VideoStoreTest {
         statement.addRental(new Rental(new Movie("The Cell", Movie.NEW_RELEASE), 3));
         statement.addRental(new Rental(new Movie("The Tigger Movie", Movie.NEW_RELEASE), 3));
         statement.generate();
-        assertEquals(18.0, statement.getTotal(), .001);
+        assertEquals(18.0, statement.getTotal(), DELTA);
         assertEquals(4, statement.getFrequentRenterPoints());
     }
 
@@ -33,7 +34,7 @@ public class VideoStoreTest {
     public void testSingleChildrensStatementTotals() {
         statement.addRental(new Rental(new Movie("The Tigger Movie", Movie.CHILDRENS), 3));
         statement.generate();
-        assertEquals(1.5, statement.getTotal(), .001);
+        assertEquals(1.5, statement.getTotal(), DELTA);
         assertEquals(1, statement.getFrequentRenterPoints());
     }
 
@@ -43,7 +44,7 @@ public class VideoStoreTest {
         statement.addRental(new Rental(new Movie("8 1/2", Movie.REGULAR), 2));
         statement.addRental(new Rental(new Movie("Eraserhead", Movie.REGULAR), 3));
         statement.generate();
-        assertEquals(7.5, statement.getTotal(), .001);
+        assertEquals(7.5, statement.getTotal(), DELTA);
         assertEquals(3, statement.getFrequentRenterPoints());
     }
 
