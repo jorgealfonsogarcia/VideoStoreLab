@@ -5,13 +5,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class VideoStoreTest {
+public class StatementTest {
 
     private static final double DELTA = .001;
+
     private Statement statement;
     private Movie newReleaseMovie1;
     private Movie newReleaseMovie2;
-    private Movie childrensMovie;
+    private Movie childrenMovie;
     private Movie regularMovie1;
     private Movie regularMovie2;
     private Movie regularMovie3;
@@ -21,7 +22,7 @@ public class VideoStoreTest {
         statement = new Statement("Customer");
         newReleaseMovie1 = new NewReleaseMovie("New Release 1");
         newReleaseMovie2 = new NewReleaseMovie("New Release 2");
-        childrensMovie = new ChildrensMovie("Childrens");
+        childrenMovie = new ChildrenMovie("Children");
         regularMovie1 = new RegularMovie("Regular 1");
         regularMovie2 = new RegularMovie("Regular 2");
         regularMovie3 = new RegularMovie("Regular 3");
@@ -45,8 +46,8 @@ public class VideoStoreTest {
     }
 
     @Test
-    public void testSingleChildrensStatementTotals() {
-        statement.addRental(new Rental(childrensMovie, 3));
+    public void testSingleChildrenStatementTotals() {
+        statement.addRental(new Rental(childrenMovie, 3));
         statement.generate();
         assertEquals(1.5, statement.getTotal(), DELTA);
         assertEquals(1, statement.getFrequentRenterPoints());
@@ -69,7 +70,7 @@ public class VideoStoreTest {
         statement.addRental(new Rental(regularMovie3, 3));
 
         assertEquals(
-                "videostore.Rental Record for Customer\n" +
+                "Rental Record for Customer\n" +
                         "\tRegular 1\t2.0\n" +
                         "\tRegular 2\t2.0\n" +
                         "\tRegular 3\t3.5\n" +
@@ -78,4 +79,3 @@ public class VideoStoreTest {
                 statement.generate());
     }
 }
-

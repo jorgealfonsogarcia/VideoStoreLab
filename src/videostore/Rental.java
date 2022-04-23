@@ -1,15 +1,15 @@
 package videostore;
 
-public class Rental {
-    private Movie movie;
-    private int daysRented;
+class Rental {
+    private final Movie movie;
+    private final int daysRented;
 
-    public Rental(Movie movie, int daysRented) {
+    Rental(Movie movie, int daysRented) {
         this.movie = movie;
         this.daysRented = daysRented;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return movie.getTitle();
     }
 

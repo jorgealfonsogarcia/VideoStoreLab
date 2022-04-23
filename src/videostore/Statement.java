@@ -3,69 +3,62 @@ package videostore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Statement {
-    private String customerName;
-    private List<Rental> rentals = new ArrayList<>();
-    private double totalAmount;
-    private int frequentRenterPoints;
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-    public Statement(String customerName) {
+class Statement {
+    private int frequentRenterPoints;
+    private double totalAmount;
+    private final String customerName;
+    private final List<Rental> rentals = new ArrayList<>();
+
+    Statement(String customerName) {
         this.customerName = customerName;
     }
 
-    public void addRental(Rental rental) {
+    double getTotal() {
+        return totalAmount;
+    }
+
+    int getFrequentRenterPoints() {
+        return frequentRenterPoints;
+    }
+
+    void addRental(final Rental rental) {
         rentals.add(rental);
     }
 
-    public String generate() {
+    String generate() {
         clearTotals();
-        String statementText = header();
-        statementText += rentalLines();
-        statementText += footer();
-        return statementText;
+        return getHeader() + getRentalLines() + getFooter();
     }
 
     private void clearTotals() {
-        totalAmount = 0;
-        frequentRenterPoints = 0;
+        totalAmount = INTEGER_ZERO;
+        frequentRenterPoints = INTEGER_ZERO;
     }
 
-    private String header() {
-        return String.format("videostore.Rental Record for %s\n", customerName);
+    private String getHeader() {
+        return String.format("Rental Record for %s%n", customerName);
     }
 
-    private String rentalLines() {
-        String rentalLines = "";
-        for (Rental rental : rentals) {
-            rentalLines += rentalLine(rental);
-        }
-        return rentalLines;
+    private String getRentalLines() {
+        return rentals.stream().map(this::getRentalLine).collect(joining());
     }
 
-    private String rentalLine(Rental rental) {
-        double rentalAmount = rental.determineAmount();
+    private String getRentalLine(final Rental rental) {
+        final var rentalAmount = rental.determineAmount();
         frequentRenterPoints += rental.determineFrequentRenterPoints();
         totalAmount += rentalAmount;
 
         return formatRentalLine(rental, rentalAmount);
     }
 
-    private String formatRentalLine(Rental rental, double rentalAmount) {
-        return String.format("\t%s\t%s\n", rental.getTitle(), rentalAmount);
+    private String formatRentalLine(final Rental rental, final double rentalAmount) {
+        return String.format("\t%s\t%s%n", rental.getTitle(), rentalAmount);
     }
 
-    private String footer() {
-        return String.format(
-                "You owed %s\n" +
-                        "You earned %d frequent renter points\n",
-                totalAmount, frequentRenterPoints);
-    }
-
-    public double getTotal() {
-        return totalAmount;
-    }
-
-    public int getFrequentRenterPoints() {
-        return frequentRenterPoints;
+    private String getFooter() {
+        return String.format("You owed %s%nYou earned %d frequent renter points%n", totalAmount, frequentRenterPoints);
     }
 }

@@ -1,14 +1,23 @@
 package videostore;
 
-public abstract class Movie {
-    private String title;
+abstract class Movie {
 
-    public Movie(String title) {
+    static final int DEFAULT_FREQUENT_RENTER_POINTS = 1;
+
+    private final String title;
+    private final double baseAmount;
+
+    Movie(String title, double baseAmount) {
         this.title = title;
+        this.baseAmount = baseAmount;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
+    }
+
+    protected double getBaseAmount() {
+        return baseAmount;
     }
 
     abstract double determineAmount(int daysRented);
